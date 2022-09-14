@@ -105,3 +105,12 @@ def count_parameters(model):
     parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print(f"Size of Seq2Seq model parameters : {parameters/1000000:.2f} M")
 
+
+def main():
+    
+    text = "Enak mantap sekali"
+    vocab = Vocabulary()
+    vocab.add_sentences(text)
+
+if __name__ == "__main__":
+    main()
