@@ -1,1 +1,5 @@
 scripts/__pycache__
+*.out
+data/*.json
+data/*.out
+.env

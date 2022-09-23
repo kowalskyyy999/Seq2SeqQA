@@ -1,9 +1,10 @@
+import os
 import torch
 from tqdm import tqdm
 
 class Engine(object):
-    def __init__(self, vocab, model, optimizer, criterion, epochs, device='cpu') -> None:
-        self.model = model
+    def __init__(self, vocab, model, optimizer, criterion, epochs, device='cpu'):
+        self.model = model.to(device)
         self.vocab = vocab
         self.optimizer = optimizer
         self.criterion = criterion
@@ -23,14 +24,14 @@ class Engine(object):
                 out = out[1:].reshape(-1, out.shape[2])
                 a = a[1:].reshape(-1)
 
-                loss = self.criterion(out, a)
+                loss = self.criterion(out, a.to(self.device))
                 loss.backward()
 
                 self.optimizer.step()
 
                 tk.set_postfix({'Epoch': epoch+1, 'Training Loss': loss.item()})
 
-                trainLoss += loss.item() * a.size(1)
+                trainLoss += loss.item() * c.size(1)
 
             trainLoss = trainLoss / len(trainLoader.dataset)
 
@@ -49,7 +50,7 @@ class Engine(object):
                 out = out[1:].reshape(-1, out.shape[2])
                 a = a[1:].reshape(-1)
 
-                loss = self.criterion(out, a)
+                loss = self.criterion(out, a.to(self.device))
 
                 if epoch is not None:
                     tk.set_postfix({'Epoch': epoch + 1, 'Validation Loss': loss.item()})
@@ -59,3 +60,10 @@ class Engine(object):
                 valLoss += loss.item() * c.size(1)
 
         valLoss = valLoss / len(valLoader.dataset)
+
+    def save_model(self, checkpoint, nameModel, path='models'):
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        torch.save(checkpoint, os.path.join(path, nameModel))
+        logging.info(f"Save the model with name '{nameModel}'")

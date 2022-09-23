@@ -1,8 +1,6 @@
 import random
-
 import torch 
 import torch.nn as nn
-
 from scripts.config import *
 
 class Encoder(nn.Module):
@@ -97,7 +95,6 @@ class Seq2Seq(nn.Module):
         self.decoder = Decoder(input_size, output_size, HIDDEN_SIZE, NUM_LAYERS, EMBEDDING_DIM, P)
 
     def forward(self, context, question, answer, teacher_forcing_ratio=0.5):
-
         answr_len, N = answer.size()
         vocab_size = len(self.vocab.index2word)
 
