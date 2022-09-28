@@ -41,7 +41,7 @@ def main():
 
     count_parameters(model)
 
-    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
+    optimizer = optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
     criterion = nn.CrossEntropyLoss(ignore_index=0)
 
     engine = Engine(vocab, model, optimizer, criterion, EPOCHS, device)
