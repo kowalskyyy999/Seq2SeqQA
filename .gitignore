@@ -3,3 +3,5 @@ scripts/__pycache__
 data/*.json
 data/*.out
 .env
+*.ipynb
+models
