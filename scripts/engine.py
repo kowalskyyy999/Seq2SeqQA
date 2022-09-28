@@ -1,6 +1,7 @@
 import os
 import torch
 from tqdm import tqdm
+import logging
 
 class Engine(object):
     def __init__(self, vocab, model, optimizer, criterion, epochs, device='cpu'):
